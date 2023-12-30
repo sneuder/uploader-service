@@ -1,0 +1,7 @@
+{
+  "name": "uploaderservice",
+  "image": "golang:1.21.1",
+  "tools": ["git", "make", "zip"],
+  "networks": ["uploadernetwork"],
+  "ports": ["3000"]
+}
