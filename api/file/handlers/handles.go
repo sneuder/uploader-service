@@ -26,10 +26,14 @@ func UploadFile(c echo.Context) error {
 
 	createdFile, err := model.CreateFile(fileNewDTO)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, crash.GenerateError(crash.FailToGetFile, err))
+		return c.JSON(http.StatusBadRequest, crash.GenerateError(crash.FailToProcessFile, err))
 	}
 
-	fileService.SaveFile(file, userId)
+	err = fileService.SaveFile(file, createdFile.UserID.String(), createdFile.ID.String())
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, crash.GenerateError(crash.FailToProcessFile, err))
+	}
+
 	return c.JSON(http.StatusOK, createdFile)
 }
 

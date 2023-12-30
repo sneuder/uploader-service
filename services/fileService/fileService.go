@@ -9,7 +9,7 @@ import (
 
 var BaseDirectory string = "uploads"
 
-func SaveFile(file *multipart.FileHeader, userId string) error {
+func SaveFile(file *multipart.FileHeader, userId string, fileId string) error {
 	if err := CreateFolder(BaseDirectory, userId); err != nil {
 		return err
 	}
@@ -21,8 +21,11 @@ func SaveFile(file *multipart.FileHeader, userId string) error {
 	}
 	defer src.Close()
 
+	fileExtension := filepath.Ext(file.Filename)
+	filename := fileId + "." + fileExtension
+
 	// Create a destination file on the server directly in the "uploads" folder
-	dstPath := filepath.Join("uploads", userId, file.Filename)
+	dstPath := filepath.Join(BaseDirectory, userId, filename)
 	dst, err := os.Create(dstPath)
 	if err != nil {
 		return err
