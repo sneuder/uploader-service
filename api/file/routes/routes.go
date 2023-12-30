@@ -16,5 +16,6 @@ func SetRoutes() {
 	g.GET("/file/user/:userId", handlers.GetAllFilesByUserId)
 	g.GET("/file/:fileId/user/:userId", handlers.GetFilesByUserId)
 	g.GET("/file/:fileId/user/:userId/download", handlers.GetFile)
-	// g.DELETE("/file", handlers.DeleteFile)
+	// g.PATCH("/file/:fileId", handlers.UpdateFile)
+	g.DELETE("/file/:fileId/user/:userId", handlers.DeleteFile)
 }

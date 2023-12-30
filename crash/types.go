@@ -11,6 +11,7 @@ const (
 	FailToUpadeUSer     = 103
 	FailToGetFile       = 201
 	FailToProcessFile   = 202
+	FailToRemoveFile    = 203
 )
 
 var ErrorCodes = map[int]string{
@@ -24,4 +25,5 @@ var ErrorCodes = map[int]string{
 
 	FailToProcessFile: "Fail to process file",
 	FailToGetFile:     "Fail to get file",
+	FailToRemoveFile:  "Fail to remove file",
 }

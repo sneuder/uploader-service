@@ -78,3 +78,22 @@ func GetFile(c echo.Context) error {
 
 	return c.File(filePath)
 }
+
+// func UpdateFile(c echo.Context) error {
+
+// }
+
+func DeleteFile(c echo.Context) error {
+	fileId := c.Param("fileId")
+	userId := c.Param("userId")
+
+	fileRemoved, err := model.DeleteFile(fileId)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, crash.GenerateError(crash.FailToRemoveFile, err))
+	}
+	if err := fileService.RemoveFile(userId, fileId); err != nil {
+		return c.JSON(http.StatusBadRequest, crash.GenerateError(crash.FailToRemoveFile, err))
+	}
+
+	return c.JSON(http.StatusOK, fileRemoved)
+}

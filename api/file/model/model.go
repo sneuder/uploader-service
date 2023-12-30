@@ -58,6 +58,13 @@ func UpdateFile() {
 
 }
 
-func DeleteFile() {
+func DeleteFile(fileId string) (File, error) {
+	fileIdUUID := uuid.FromStringOrNil(fileId)
+	fileToRemove := File{ID: fileIdUUID}
 
+	if err := model.Delete(&fileToRemove).Error; err != nil {
+		return fileToRemove, err
+	}
+
+	return fileToRemove, nil
 }

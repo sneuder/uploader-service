@@ -1,6 +1,7 @@
 package fileService
 
 import (
+	"fmt"
 	"io"
 	"mime/multipart"
 	"os"
@@ -22,7 +23,7 @@ func SaveFile(file *multipart.FileHeader, userId string, fileId string) error {
 	defer src.Close()
 
 	fileExtension := filepath.Ext(file.Filename)
-	filename := fileId + "." + fileExtension
+	filename := fileId + fileExtension
 
 	// Create a destination file on the server directly in the "uploads" folder
 	dstPath := filepath.Join(BaseDirectory, userId, filename)
@@ -57,4 +58,20 @@ func FindFilePath(folderName string, fileName string) (string, error) {
 		return "", err
 	}
 	return files[0], nil
+}
+
+func RemoveFile(folderName string, fileName string) error {
+	filePath, err := FindFilePath(folderName, fileName)
+
+	if err != nil {
+		return err
+	}
+
+	err = os.Remove(filePath)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return err
+	}
+
+	return nil
 }
