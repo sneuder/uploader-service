@@ -32,6 +32,19 @@ func GenerateToken(userId uuid.UUID) (string, error) {
 	return signedToken, nil
 }
 
-func VerifyToken(token string) {
+func VerifyToken(tokenString string) (*CustomClaims, bool) {
+	token, err := jwt.ParseWithClaims(tokenString, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return signingKey, nil
+	})
 
+	if err != nil {
+		return nil, false
+	}
+
+	claims, ok := token.Claims.(*CustomClaims)
+	if !ok || !token.Valid {
+		return nil, false
+	}
+
+	return claims, true
 }

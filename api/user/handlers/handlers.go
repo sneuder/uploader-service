@@ -4,9 +4,9 @@ import (
 	"errors"
 	"net/http"
 	"uploader-service/api/user/model"
-	"uploader-service/api/user/services/auth"
 	"uploader-service/api/user/services/crypt"
 	"uploader-service/crash"
+	"uploader-service/services/auth"
 
 	"github.com/labstack/echo/v4"
 )
