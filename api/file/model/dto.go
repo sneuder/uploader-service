@@ -19,6 +19,11 @@ type FileNewDTO struct {
 	Name   string    `json:"name" validate:"required"`
 }
 
+type FileUpdateDTO struct {
+	ID   uuid.UUID `param:"id"`
+	Name *string   `json:"name,omitempty"`
+}
+
 // dto mapping
 
 func FromNewToFile(fileNewDTO FileNewDTO) File {

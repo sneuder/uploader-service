@@ -8,10 +8,11 @@ const (
 	DifferentFieldTypes = 52
 	DifferentPassword   = 101
 	NotFoundUserInAuth  = 102
-	FailToUpadeUSer     = 103
+	FailToUpadeUser     = 103
 	FailToGetFile       = 201
 	FailToProcessFile   = 202
 	FailToRemoveFile    = 203
+	FailToUpdateFile    = 204
 )
 
 var ErrorCodes = map[int]string{
@@ -21,9 +22,10 @@ var ErrorCodes = map[int]string{
 	ValidationData:     "Some fields are not completed",
 	DifferentPassword:  "Different passwords",
 	NotFoundUserInAuth: "User not found in auth",
-	FailToUpadeUSer:    "Fail to update user",
+	FailToUpadeUser:    "Fail to update user",
 
 	FailToProcessFile: "Fail to process file",
 	FailToGetFile:     "Fail to get file",
 	FailToRemoveFile:  "Fail to remove file",
+	FailToUpdateFile:  "Fail to update file",
 }

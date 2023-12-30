@@ -79,9 +79,21 @@ func GetFile(c echo.Context) error {
 	return c.File(filePath)
 }
 
-// func UpdateFile(c echo.Context) error {
+func UpdateFile(c echo.Context) error {
+	fileUpdateDTO := new(model.FileUpdateDTO)
 
-// }
+	if err := c.Bind(fileUpdateDTO); err != nil {
+		return c.JSON(http.StatusBadRequest, crash.GenerateError(crash.MissingSomeFields, err))
+	}
+
+	updatedFile, err := model.UpdateFile(*fileUpdateDTO)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, crash.GenerateError(crash.FailToUpdateFile, err))
+
+	}
+
+	return c.JSON(http.StatusOK, updatedFile)
+}
 
 func DeleteFile(c echo.Context) error {
 	fileId := c.Param("fileId")

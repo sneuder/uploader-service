@@ -74,7 +74,7 @@ func UpdateUser(c echo.Context) error {
 
 	updatedUser, err := model.UpdateUser(*updateUser)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, crash.GenerateError(crash.FailToUpadeUSer, err))
+		return c.JSON(http.StatusBadRequest, crash.GenerateError(crash.FailToUpadeUser, err))
 	}
 
 	userResponseDTO := model.FromUserToResponse(&updatedUser)

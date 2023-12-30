@@ -54,8 +54,23 @@ func GetFileByUserId(fileId string, userId string) (File, error) {
 	return file, nil
 }
 
-func UpdateFile() {
+func UpdateFile(fileUpdateDTO FileUpdateDTO) (File, error) {
+	foundFile := File{}
+	foundFile.ID = fileUpdateDTO.ID
 
+	if err := model.First(&foundFile).Error; err != nil {
+		return foundFile, err
+	}
+
+	if fileUpdateDTO.Name != nil {
+		foundFile.Name = *fileUpdateDTO.Name
+	}
+
+	if err := model.Save(&foundFile).Error; err != nil {
+		return foundFile, err
+	}
+
+	return foundFile, nil
 }
 
 func DeleteFile(fileId string) (File, error) {
