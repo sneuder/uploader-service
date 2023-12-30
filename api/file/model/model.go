@@ -1,35 +1,57 @@
 package model
 
 import (
-	"time"
 	"uploader-service/config/tools"
 
+	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 )
 
-type File struct {
-	ID        uint      // Standard field for the primary key
-	Name      string    // A regular string field
-	CreatedAt time.Time // Automatically managed by GORM for creation time
-	UpdatedAt time.Time // Automatically managed by GORM for update time
-}
-
 var model *gorm.DB
+var table *gorm.DB
 
 func SetUpModel() {
 	model = tools.DB
+	table = tools.DB.Table("files")
+	model.AutoMigrate(&File{})
 }
 
-func CreateFile() {
+func CreateFile(fileNewDTO FileNewDTO) (File, error) {
+	newFile := FromNewToFile(fileNewDTO)
 
+	if result := model.Create(&newFile); result.Error != nil {
+		return File{}, result.Error
+	}
+
+	return newFile, nil
 }
 
-func GetFilesByUser() {
+func GetFilesByUserId(userId string) ([]File, error) {
+	var files []File
 
+	userIdUUID := uuid.FromStringOrNil(userId)
+
+	if err := model.Where(&File{UserID: userIdUUID}).Find(&files).Error; err != nil {
+		return files, err
+	}
+
+	return files, nil
 }
 
-func GetFile() {
+func GetFileByUserId(fileId string, userId string) (File, error) {
+	fileIdUUID := uuid.FromStringOrNil(fileId)
+	userIdUUID := uuid.FromStringOrNil(userId)
 
+	file := File{
+		ID:     fileIdUUID,
+		UserID: userIdUUID,
+	}
+
+	if err := model.First(&file).Error; err != nil {
+		return file, err
+	}
+
+	return file, nil
 }
 
 func UpdateFile() {

@@ -17,6 +17,7 @@ func main() {
 	g := e.Group("")
 
 	tools.SetGlobalTools(e, g, db)
+	tools.SetBaseFolder()
 
 	database.SetModels()
 	echoConfig.SetCustomes()

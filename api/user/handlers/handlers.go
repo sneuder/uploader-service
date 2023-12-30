@@ -6,7 +6,7 @@ import (
 	"uploader-service/api/user/model"
 	"uploader-service/api/user/services/crypt"
 	"uploader-service/crash"
-	"uploader-service/services/auth"
+	"uploader-service/services/authService"
 
 	"github.com/labstack/echo/v4"
 )
@@ -58,7 +58,7 @@ func SignIn(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, crash.GenerateError(crash.NotFoundUserInAuth, err))
 	}
 
-	token, err := auth.GenerateToken(foundUser.ID)
+	token, err := authService.GenerateToken(foundUser.ID)
 	c.Response().Header().Set(echo.HeaderAuthorization, "Bearer "+token)
 
 	userResponseDTO := model.FromUserToResponse(&foundUser)

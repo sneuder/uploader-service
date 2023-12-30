@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 	"uploader-service/crash"
-	authService "uploader-service/services/auth"
+	"uploader-service/services/authService"
 
 	"github.com/labstack/echo/v4"
 )

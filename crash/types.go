@@ -9,6 +9,8 @@ const (
 	DifferentPassword   = 101
 	NotFoundUserInAuth  = 102
 	FailToUpadeUSer     = 103
+	FailToGetFile       = 201
+	FailToProcessFile   = 202
 )
 
 var ErrorCodes = map[int]string{
@@ -19,4 +21,7 @@ var ErrorCodes = map[int]string{
 	DifferentPassword:  "Different passwords",
 	NotFoundUserInAuth: "User not found in auth",
 	FailToUpadeUSer:    "Fail to update user",
+
+	FailToProcessFile: "Fail to process file",
+	FailToGetFile:     "Fail to get file",
 }

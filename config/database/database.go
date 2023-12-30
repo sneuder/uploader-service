@@ -1,6 +1,7 @@
 package database
 
 import (
+	fileModel "uploader-service/api/file/model"
 	userModel "uploader-service/api/user/model"
 
 	"gorm.io/driver/sqlite"
@@ -18,4 +19,5 @@ func ConnectDB() *gorm.DB {
 
 func SetModels() {
 	userModel.SetModel()
+	fileModel.SetUpModel()
 }

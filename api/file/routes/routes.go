@@ -2,35 +2,19 @@ package routes
 
 import (
 	"uploader-service/api/file/handlers"
+	"uploader-service/config/tools"
 
 	"github.com/labstack/echo/v4"
 )
 
-func SetRoutes(e *echo.Echo) {
+var g *echo.Group
 
-	uploadFile(e)
-	downloadFile(e)
-	renameFile(e)
-	deleteFile(e)
-	deleteFile(e)
-}
+func SetRoutes() {
+	g := tools.G
 
-func uploadFile(g *echo.Echo) {
 	g.POST("/file", handlers.UploadFile)
-}
-
-func downloadFile(g *echo.Echo) {
-	g.GET("/file", handlers.UploadFile)
-}
-
-func renameFile(g *echo.Echo) {
-	g.PATCH("/file", handlers.RenameFile)
-}
-
-func deleteFile(g *echo.Echo) {
-	g.DELETE("/file", handlers.DeleteFile)
-}
-
-func deleteFiles(g *echo.Echo) {
-	g.DELETE("/file/group", handlers.DeleteFiles)
+	g.GET("/file/user/:userId", handlers.GetAllFilesByUserId)
+	g.GET("/file/:fileId/user/:userId", handlers.GetFilesByUserId)
+	// g.DELETE("/file", handlers.DeleteFile)
+	// g.DELETE("/file/group", handlers.DeleteFiles)
 }

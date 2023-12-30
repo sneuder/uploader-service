@@ -10,16 +10,15 @@ var model *gorm.DB
 var table *gorm.DB
 
 func SetModel() {
-	tools.DB.AutoMigrate(&User{})
 	model = tools.DB
 	table = tools.DB.Table("users")
+	model.AutoMigrate(&User{})
 }
 
 func SignUp(userSignUpDTO *UserSignUpDTO) (User, error) {
 	newUser := FromSignUpToUser(userSignUpDTO)
 
-	result := model.Create(&newUser)
-	if result.Error != nil {
+	if result := model.Create(&newUser); result.Error != nil {
 		return User{}, result.Error
 	}
 
