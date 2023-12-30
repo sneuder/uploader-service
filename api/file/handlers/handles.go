@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 	"uploader-service/api/file/model"
 	"uploader-service/crash"
@@ -60,6 +61,20 @@ func GetFilesByUserId(c echo.Context) error {
 	return c.JSON(http.StatusOK, file)
 }
 
-func DownloadFile(c echo.Context) error {
-	return c.JSON(http.StatusOK, "asa")
+func GetFile(c echo.Context) error {
+	fileId := c.Param("fileId")
+	userId := c.Param("userId")
+
+	filePath, err := fileService.FindFilePath(userId, fileId)
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, crash.GenerateError(crash.FailToGetFile, err))
+	}
+
+	if filePath == "" {
+		err := errors.New("Could not find file")
+		return c.JSON(http.StatusBadRequest, crash.GenerateError(crash.FailToGetFile, err))
+	}
+
+	return c.File(filePath)
 }

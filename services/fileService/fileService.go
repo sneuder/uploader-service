@@ -50,3 +50,11 @@ func CreateFolder(baseDirectory string, folderName string) error {
 
 	return nil
 }
+
+func FindFilePath(folderName string, fileName string) (string, error) {
+	files, err := filepath.Glob(filepath.Join(BaseDirectory, folderName, fileName+".*"))
+	if err != nil || len(files) == 0 {
+		return "", err
+	}
+	return files[0], nil
+}
